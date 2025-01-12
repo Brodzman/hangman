@@ -22,6 +22,9 @@ def check_player_input(player, computer, score):
             print(computer)
             return score, computer
         
+    print("Incorrect!")
+    computer = computer
+    return score, computer     
 
 def get_player_input():
     player_choice = input("enter input: ")

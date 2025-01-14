@@ -8,23 +8,29 @@ def main():
     computer_word_length = len(computer_choice)
     print(f'Word is {computer_word_length} characters in length')
     score = 0
+    lives = 5
     while score != computer_word_length:
         player_choice = get_player_input()
-        score, computer_choice = check_player_input(player_choice, computer_choice, score)
+        score, computer_choice, lives = check_player_input(player_choice, computer_choice, score, lives)
         print(score)
+        if lives == 0:
+            print('You lose!')
+            return
     print('You win!')
 
-def check_player_input(player, computer, score):
+def check_player_input(player, computer, score, lives):
     for i in computer:
         if player == i:
             computer = computer.replace(i, "")
             score += 1
             print(computer)
-            return score, computer
+            return score, computer, lives
         
     print("Incorrect!")
     computer = computer
-    return score, computer     
+    lives -= 1
+    print(f'You have {lives} remaining')
+    return score, computer, lives   
 
 def get_player_input():
     player_choice = input("enter input: ")
@@ -37,5 +43,5 @@ def get_words(path):
     with open(path) as f:
         words = [line.strip() for line in f]
     return words
-    
+
 main()

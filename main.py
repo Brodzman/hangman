@@ -8,6 +8,7 @@ def main():
     computer_word_length = len(computer_choice)
     print(f'The word to guess is {computer_word_length} characters in length')
     score = 0
+    print(blank_choices(computer_word_length))
     lives = 5
     while score != computer_word_length:
         player_choice = get_player_input()
@@ -18,21 +19,26 @@ def main():
             return
     print('You win!')
 
-def check_player_input(player, computer, score, lives):
-    for i in range(0, len(computer)):
-        print(computer[i])
-        if player == computer[i]:
-            computer = computer.replace(computer[i], "")
+def check_player_input(player, blank, score, lives):
+    for char in blank:
+        if player == char:
             score += 1
-            print(computer)
+            blank = blank.replace(char, "")
+            print(blank)
             print('Correct!')
-            return score, computer, lives
+            return score, blank, lives
         
     print("Incorrect!")
-    computer = computer
+    blank = blank
     lives -= 1
     print(f'You have {lives} attempts remaining')
-    return score, computer, lives   
+    return score, blank, lives   
+
+def blank_choices(computer_word_length):
+    blank = []
+    for char in range(0, computer_word_length):
+        blank.append("_")
+    return blank
 
 def get_player_input():
     player_choice = input("Enter your guess: ")
